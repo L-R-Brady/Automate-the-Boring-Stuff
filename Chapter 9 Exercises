@@ -1,0 +1,52 @@
+#!/usr/local/bin/python3
+#selectiveCopy.py - Walks through a folder tree with the extension .PDF and copies them to a new folder.
+
+import re
+import os
+import shutil
+
+filePdf = re.compile(r"""^(.*?)			#text before
+		      [.][p][d][f]			        #extension .pdf
+		      """, re.VERBOSE)
+
+def selectiveCopy(fileExtension):
+	for pdfFiles in os.listdir("/Users/Shady/Desktop/newPDFs"):								    #All PDFs now taken from Desktop, but path can be changed if later they should be moved back
+		locatedFiles = filePdf.search(pdfFiles)
+		if locatedFiles != None:
+			print(locatedFiles)
+			files_to_copy = os.path.join("/Users/Shady/Desktop/newPDFs", pdfFiles)		#Can be renamed to files_to_move if files need to be moved instead of copied
+			# shutil.move(files_to_move, "/Users/Shady/Desktop/newPDFs")			        #This is only when files are to be moved from source to a destination
+			shutil.copy(files_to_copy, "/Users/Shady/Desktop/oldPDFs")			          #This is only for when files are to be copied to a destination, while also staying at source
+			print("The following file has been copied " + files_to_copy)			        #Switch depending on moving or copying
+      
+      
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#!/usr/local/bin/python3
+#showLargeFiles.py - Walks through a folder tree and searches for files within specified size parameters and prints their absolute path and size
+
+import os
+import shutil
+
+for folders, subfolders, files in os.walk("/Users/Shady/Downloads"):
+		mainFolders = (os.path.abspath(folders))
+		if os.path.getsize(mainFolders) > 100000:
+			print(mainFolders)
+			print(os.path.getsize(mainFolders))
+			
+		for subfolder in subfolders:
+			subFolders = (os.path.join(folders, subfolder))
+		if os.path.getsize(subFolders) > 100000:
+			print(subFolders)
+			print(os.path.getsize(subFolders))
+			
+		for file in files:
+			allFiles = (os.path.join(folders, file))
+		if os.path.getsize(allFiles) > 100000:
+			print(allFiles)
+			print(os.path.getsize(allFiles))
+      
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      
+      
+      
