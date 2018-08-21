@@ -1,0 +1,38 @@
+#Debug the code that was given, change the bugs and make the program run properly.
+
+import random
+import logging
+
+logging.disable(logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
+
+logging.debug("Start of program")
+choices = ["heads", "tails"]
+guess = ''
+while guess not in ('heads', 'tails'):
+    print('Guess the coin toss! Enter heads or tails:')
+    guess = input().lower()
+    logging.debug("Your guess is: " + guess)
+toss = random.choice(choices)
+logging.debug(toss)
+if toss == guess:
+    print('You got it!')
+else:
+    print('Nope! Guess again!')
+    guess = input().lower()
+    logging.debug("Your guess is: " + guess)
+    if toss == guess:
+        print('You got it!')
+    else:
+        print('Nope. You are really bad at this game.')
+        logging.debug("End of program")
+
+Issues found:
+#both heads and tails return 0
+#0 is returned instead of heads or tails
+#guess was spelt guesss, so second user input was never accepted
+
+Fixes:
+#removed random.randint and added choices using random.choice(choices) to pick either heads or tails
+#removed random.randint, also added .lower() to allow for any uppercase or lowercase spellings for input
+#spelt guess correctly 
