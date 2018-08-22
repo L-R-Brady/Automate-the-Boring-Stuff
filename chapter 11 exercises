@@ -1,0 +1,28 @@
+#I'm feeling lucky code along. I don't use google and so I changed the code to work with the browser I typically use, 
+#Ecosia.org this isn't an exercise in which you have to solve a problem, I thought I would just share the code I modified 
+#to work with Ecosia to make it easier to use an alternative to Google.
+
+import requests
+import sys
+import webbrowser
+from bs4 import BeautifulSoup
+
+print("Searching...") #Display text while downloading the search page
+res = requests.get("https://www.ecosia.org/search?q=" + " ".join(sys.argv[1:]))
+res.raise_for_status()
+
+#Retrieve top search result links
+soup = BeautifulSoup(res.text, "html.parser")
+
+#Open a browser tab for each result
+linkElems = soup.select(".js-result a")
+numOpen = min(5, len(linkElems))
+for i in range(numOpen):
+	#print(linkElems[i].get("href"))
+	webbrowser.open(linkElems[i].get("href"))
+ 
+ --------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+ 
+ 
+ 
